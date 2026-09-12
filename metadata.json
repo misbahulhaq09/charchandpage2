@@ -1,0 +1,6 @@
+{
+  "name": "Char Chand",
+  "description": "Char Chand Haute Couture — Visual cinematic showcase featuring Indo Western, Traditional Suits, Men's Formal, Women's Formal, Perfumes, Jewellery, and Bags.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
