@@ -1,0 +1,103 @@
+.bounceCardsContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  margin-top: -110px;
+  margin-left: -110px;
+  border: 3px solid #E6CA85;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), 0 0 1px rgba(230, 202, 133, 0.4);
+  cursor: pointer;
+  background-color: #20070E;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  will-change: transform;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:hover,
+.card.is-active {
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(230, 202, 133, 0.5);
+  border-color: #FBF9F5;
+  z-index: 35;
+}
+
+.card .image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.card .card-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 8px;
+  background: linear-gradient(to top, rgba(32, 7, 14, 0.95) 0%, rgba(32, 7, 14, 0.7) 60%, rgba(32, 7, 14, 0) 100%);
+  color: #FBF9F5;
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+/* Tablet & Mobile responsive card sizing */
+@media (max-width: 768px) {
+  .bounceCardsContainer {
+    max-width: 100%;
+  }
+
+  .card {
+    width: 165px;
+    height: 165px;
+    margin-top: -82.5px;
+    margin-left: -82.5px;
+    border-radius: 16px;
+    border-width: 2.5px;
+  }
+
+  .card .card-caption {
+    font-size: 9px;
+    padding: 8px 6px;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* Extra small mobile screens (<= 380px) */
+@media (max-width: 380px) {
+  .card {
+    width: 145px;
+    height: 145px;
+    margin-top: -72.5px;
+    margin-left: -72.5px;
+    border-radius: 14px;
+    border-width: 2px;
+  }
+
+  .card .card-caption {
+    font-size: 8.5px;
+    padding: 6px 4px;
+    letter-spacing: 0.12em;
+  }
+}
+
