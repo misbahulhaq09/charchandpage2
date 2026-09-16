@@ -3,6 +3,6 @@ export interface CategoryItem {
   name: string;
   slug: string;
   shopUrl: string;
-  imageUrl: string;
+  imageUrl?: string;
   indexNumber: string;
 }

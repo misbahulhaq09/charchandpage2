@@ -3,9 +3,19 @@ import { gsap } from 'gsap';
 import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import './BounceCards.css';
 
+export interface LookbookCardItem {
+  id?: string;
+  label: string;
+  link: string;
+  romanNumeral?: string;
+  discipline?: string;
+  edition?: string;
+}
+
 export interface BounceCardsProps {
   className?: string;
-  images?: string[];
+  items?: LookbookCardItem[];
+  // Legacy / fallback props
   labels?: string[];
   links?: string[];
   containerWidth?: number | string;
@@ -53,7 +63,7 @@ const DEFAULT_XS_TRANSFORMS = [
 
 export const BounceCards: React.FC<BounceCardsProps> = ({
   className = '',
-  images = [],
+  items = [],
   labels = [],
   links = [],
   containerWidth = '100%',
@@ -72,6 +82,17 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
   const isInitialMountRef = useRef<boolean>(true);
   const touchStartRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
+  // Normalize card data from items or legacy labels/links arrays
+  const cardItems: LookbookCardItem[] = items.length > 0
+    ? items
+    : labels.map((label, idx) => ({
+        label,
+        link: links[idx] || 'https://shop.charchand.in',
+        romanNumeral: ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'][idx] || `0${idx + 1}`,
+        edition: 'HAUTE COUTURE',
+      }));
+
+  const totalCards = cardItems.length;
   const [activeIndex, setActiveIndex] = useState<number>(selectedCardIndex ?? 0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isSmallMobile, setIsSmallMobile] = useState<boolean>(false);
@@ -128,7 +149,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
 
       const q = gsap.utils.selector(containerRef);
 
-      images.forEach((_, i) => {
+      cardItems.forEach((_, i) => {
         const target = q(`.card-${i}`);
         if (!target.length) return;
         gsap.killTweensOf(target);
@@ -167,7 +188,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
         }
       });
     },
-    [activeTransforms, images, isMobile, isSmallMobile]
+    [activeTransforms, cardItems, isMobile, isSmallMobile]
   );
 
   const resetSiblings = useCallback(() => {
@@ -175,7 +196,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
 
     const q = gsap.utils.selector(containerRef);
 
-    images.forEach((_, i) => {
+    cardItems.forEach((_, i) => {
       const target = q(`.card-${i}`);
       if (!target.length) return;
       gsap.killTweensOf(target);
@@ -190,7 +211,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
         zIndex: 10 + i,
       });
     });
-  }, [activeTransforms, enableHover, images, isMobile]);
+  }, [activeTransforms, enableHover, cardItems, isMobile]);
 
   // Initial bounce intro animation
   useEffect(() => {
@@ -209,7 +230,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
       );
     }, containerRef);
     return () => ctx.revert();
-  }, [animationStagger, easeType, animationDelay, images.length]);
+  }, [animationStagger, easeType, animationDelay, totalCards]);
 
   // Sync with external selected index (e.g., from header)
   useEffect(() => {
@@ -220,11 +241,11 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
     if (
       selectedCardIndex !== undefined &&
       selectedCardIndex >= 0 &&
-      selectedCardIndex < images.length
+      selectedCardIndex < totalCards
     ) {
       pushSiblings(selectedCardIndex);
     }
-  }, [selectedCardIndex, pushSiblings, images.length]);
+  }, [selectedCardIndex, pushSiblings, totalCards]);
 
   // Handle card click or tap
   const handleCardInteraction = (idx: number) => {
@@ -241,14 +262,14 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
     // If already active or on desktop: perform direct click action
     if (onCardClick) {
       onCardClick(idx);
-    } else if (links[idx]) {
-      window.open(links[idx], '_blank', 'noopener,noreferrer');
+    } else if (cardItems[idx]?.link) {
+      window.open(cardItems[idx].link, '_blank', 'noopener,noreferrer');
     }
   };
 
   // Next / Previous navigation methods
   const navigateToCard = (nextIdx: number) => {
-    const boundedIdx = (nextIdx + images.length) % images.length;
+    const boundedIdx = (nextIdx + totalCards) % totalCards;
     pushSiblings(boundedIdx);
     if (onActiveChange) {
       onActiveChange(boundedIdx);
@@ -287,28 +308,27 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
     // Detect horizontal swipe if deltaX is significant and primarily horizontal
     if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) && elapsedTime < 500) {
       if (deltaX < 0) {
-        // Swiped Left -> Go Next
         navigateToCard(activeIndex + 1);
       } else {
-        // Swiped Right -> Go Previous
         navigateToCard(activeIndex - 1);
       }
     }
   };
 
-  const currentLabel = labels[activeIndex] || `Collection ${activeIndex + 1}`;
-  const currentLink = links[activeIndex] || 'https://shop.charchand.in';
+  const currentItem = cardItems[activeIndex] || cardItems[0];
+  const currentLabel = currentItem?.label || `Collection ${activeIndex + 1}`;
+  const currentLink = currentItem?.link || 'https://shop.charchand.in';
 
   return (
     <div className={`w-full flex flex-col items-center ${className}`}>
       {/* Mobile Swipe / Interaction Hint */}
       <div className="md:hidden flex items-center justify-center space-x-2 mb-3">
-        <span className="font-nav text-[9px] tracking-[0.25em] text-[#E6CA85]/80 uppercase">
+        <span className="font-nav text-[9px] tracking-[0.25em] text-[#8E6932] uppercase font-semibold">
           ← SWIPE OR TAP TO EXPLORE →
         </span>
       </div>
 
-      {/* Main BounceCards Container */}
+      {/* Main BounceCards Container (No Images - Pure Luxury Typographic Archival Cards) */}
       <div
         className="bounceCardsContainer"
         ref={containerRef}
@@ -320,8 +340,9 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {images.map((src, idx) => {
+        {cardItems.map((item, idx) => {
           const isActive = idx === activeIndex;
+          const roman = item.romanNumeral || ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'][idx] || `0${idx + 1}`;
           return (
             <div
               key={idx}
@@ -340,7 +361,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
               onClick={() => handleCardInteraction(idx)}
               role="button"
               tabIndex={0}
-              aria-label={`View collection ${labels[idx] || idx + 1}`}
+              aria-label={`View collection ${item.label}`}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault();
@@ -348,17 +369,35 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
                 }
               }}
             >
-              <img
-                className="image"
-                src={src}
-                alt={labels[idx] || `card-${idx}`}
-                loading="eager"
-              />
-              {labels[idx] && (
-                <div className="card-caption">
-                  {labels[idx]}
+              {/* Luxury Emblem Card Frame (No Images) */}
+              <div className="card-inner-frame select-none">
+                <div className="card-top-row">
+                  <span className="card-roman">{roman}</span>
+                  <span className="card-sparkle">✦</span>
+                  <span className="card-code">CC-0{idx + 1}</span>
                 </div>
-              )}
+
+                <div className="card-center-content">
+                  <div className="card-emblem">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#E6CA85" strokeWidth="1.2">
+                      <polygon points="12,2 15,9 22,12 15,15 12,22 9,15 2,12 9,9" />
+                      <circle cx="12" cy="12" r="2.5" fill="#E6CA85" />
+                    </svg>
+                  </div>
+                  <h3 className="card-collection-title">
+                    {item.label}
+                  </h3>
+                  <div className="card-divider" />
+                  <span className="card-sub-edition">
+                    {item.edition || 'HAUTE COUTURE'}
+                  </span>
+                </div>
+
+                <div className="card-bottom-row">
+                  <span className="card-brand-mark">CHAR CHAND</span>
+                  <span className="card-explore-arrow">→</span>
+                </div>
+              </div>
             </div>
           );
         })}
@@ -367,21 +406,21 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
       {/* Touch-Friendly Mobile & Desktop Navigation Bar */}
       <div className="w-full max-w-md mx-auto mt-6 px-4 flex flex-col items-center">
         {/* Active Title, Pagination & Prev/Next Arrows */}
-        <div className="w-full flex items-center justify-between py-2 border-y border-[#E6CA85]/20">
+        <div className="w-full flex items-center justify-between py-2 border-y border-[#3E101D]/15">
           <button
             id="bounce-cards-prev-btn"
             onClick={handlePrev}
-            className="flex items-center justify-center w-11 h-11 border border-[#E6CA85]/40 bg-[#2B0B14]/80 text-[#E6CA85] hover:bg-[#3E101D] hover:border-[#E6CA85] active:scale-95 transition-all shadow-md focus:outline-none"
+            className="flex items-center justify-center w-11 h-11 border border-[#3E101D]/20 bg-[#FFFFF0] text-[#3E101D] hover:bg-[#3E101D] hover:text-[#FFFFF0] active:scale-95 transition-all shadow-sm focus:outline-none"
             aria-label="Previous Collection"
           >
             <ChevronLeft size={18} />
           </button>
 
           <div className="flex flex-col items-center text-center px-3 flex-1">
-            <span className="font-nav text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-[#E6CA85] font-semibold">
-              {String(activeIndex + 1).padStart(2, '0')} / {String(images.length).padStart(2, '0')}
+            <span className="font-nav text-[9px] sm:text-[10px] tracking-[0.3em] uppercase text-[#8E6932] font-semibold">
+              {String(activeIndex + 1).padStart(2, '0')} / {String(totalCards).padStart(2, '0')}
             </span>
-            <span className="font-brand text-sm sm:text-base tracking-[0.18em] text-[#FBF9F5] uppercase mt-0.5 truncate max-w-[220px]">
+            <span className="font-brand text-sm sm:text-base tracking-[0.18em] text-[#3E101D] uppercase mt-0.5 truncate max-w-[220px] font-medium">
               {currentLabel}
             </span>
           </div>
@@ -389,7 +428,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
           <button
             id="bounce-cards-next-btn"
             onClick={handleNext}
-            className="flex items-center justify-center w-11 h-11 border border-[#E6CA85]/40 bg-[#2B0B14]/80 text-[#E6CA85] hover:bg-[#3E101D] hover:border-[#E6CA85] active:scale-95 transition-all shadow-md focus:outline-none"
+            className="flex items-center justify-center w-11 h-11 border border-[#3E101D]/20 bg-[#FFFFF0] text-[#3E101D] hover:bg-[#3E101D] hover:text-[#FFFFF0] active:scale-95 transition-all shadow-sm focus:outline-none"
             aria-label="Next Collection"
           >
             <ChevronRight size={18} />
@@ -398,7 +437,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
 
         {/* 7 Touch Pagination Dots */}
         <div className="flex items-center justify-center space-x-2 sm:space-x-2.5 mt-4">
-          {images.map((_, idx) => (
+          {cardItems.map((item, idx) => (
             <button
               key={idx}
               id={`bounce-dot-${idx}`}
@@ -408,10 +447,10 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
               }}
               className={`transition-all duration-300 focus:outline-none ${
                 idx === activeIndex
-                  ? 'w-6 sm:w-7 h-2 bg-[#E6CA85] rounded-full shadow-[0_0_8px_#E6CA85]'
-                  : 'w-2 h-2 bg-[#FBF9F5]/30 hover:bg-[#FBF9F5]/60 rounded-full'
+                  ? 'w-6 sm:w-7 h-2 bg-[#3E101D] rounded-full shadow-[0_0_8px_rgba(62,16,29,0.3)]'
+                  : 'w-2 h-2 bg-[#3E101D]/25 hover:bg-[#3E101D]/50 rounded-full'
               }`}
-              aria-label={`Jump to ${labels[idx] || `Item ${idx + 1}`}`}
+              aria-label={`Jump to ${item.label}`}
             />
           ))}
         </div>
@@ -422,7 +461,7 @@ export const BounceCards: React.FC<BounceCardsProps> = ({
           href={currentLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex items-center justify-center px-6 py-3 border border-[#E6CA85] bg-[#E6CA85] text-[#20070E] font-nav text-[10px] sm:text-[11px] tracking-[0.25em] uppercase font-bold hover:bg-[#FBF9F5] hover:border-[#FBF9F5] transition-all shadow-md group"
+          className="mt-4 inline-flex items-center justify-center px-6 py-3 border border-[#260710] bg-[#260710] text-[#FFFFF0] font-nav text-[10px] sm:text-[11px] tracking-[0.25em] uppercase font-bold hover:bg-[#3D0F1E] hover:border-[#3D0F1E] transition-all shadow-md group"
         >
           <span>SHOP {currentLabel}</span>
           <ExternalLink size={13} className="ml-2 transition-transform duration-200 group-hover:translate-x-0.5" />

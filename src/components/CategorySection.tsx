@@ -26,14 +26,16 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
     >
       {/* Background Image Container with Smooth Zoom & Parallax */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <img
-          ref={imageRef}
-          src={category.imageUrl}
-          alt={`Char Chand Haute Couture ${category.name}`}
-          className="category-image w-full h-full object-cover object-center transform scale-100 transition-transform duration-1000 ease-out will-change-transform"
-          loading={index === 0 ? 'eager' : 'lazy'}
-          decoding="async"
-        />
+        {category.imageUrl && (
+          <img
+            ref={imageRef}
+            src={category.imageUrl}
+            alt={`Char Chand Haute Couture ${category.name}`}
+            className="category-image w-full h-full object-cover object-center transform scale-100 transition-transform duration-1000 ease-out will-change-transform"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        )}
 
         {/* Subtle Luxury Editorial Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#2B0B14]/80 via-[#2B0B14]/35 to-[#2B0B14]/40 transition-opacity duration-700 pointer-events-none" />

@@ -18,12 +18,12 @@
   height: 220px;
   margin-top: -110px;
   margin-left: -110px;
-  border: 3px solid #E6CA85;
-  border-radius: 20px;
+  border: 2px solid #C5A880;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65), 0 0 1px rgba(230, 202, 133, 0.4);
+  box-shadow: 0 16px 36px rgba(62, 16, 29, 0.22), 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  background-color: #20070E;
+  background: radial-gradient(circle at 50% 30%, #3B0D18 0%, #1A050B 100%);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
   will-change: transform;
   -webkit-tap-highlight-color: transparent;
@@ -31,34 +31,129 @@
 
 .card:hover,
 .card.is-active {
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(230, 202, 133, 0.5);
-  border-color: #FBF9F5;
+  box-shadow: 0 24px 48px rgba(62, 16, 29, 0.38), 0 0 24px rgba(230, 202, 133, 0.45);
+  border-color: #E6CA85;
   z-index: 35;
 }
 
-.card .image {
+.card-inner-frame {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Elegant inner hairline inset border */
+.card-inner-frame::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(230, 202, 133, 0.28);
+  border-radius: 12px;
   pointer-events: none;
 }
 
-.card .card-caption {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 8px;
-  background: linear-gradient(to top, rgba(32, 7, 14, 0.95) 0%, rgba(32, 7, 14, 0.7) 60%, rgba(32, 7, 14, 0) 100%);
-  color: #FBF9F5;
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.card-roman {
   font-family: inherit;
-  font-size: 10px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #E6CA85;
+  font-weight: 600;
+}
+
+.card-sparkle {
+  font-size: 11px;
+  color: #E6CA85;
+  opacity: 0.85;
+}
+
+.card-code {
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  color: rgba(251, 249, 245, 0.5);
   text-transform: uppercase;
+}
+
+.card-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  padding: 0 6px;
+}
+
+.card-emblem {
+  color: #E6CA85;
+  margin-bottom: 6px;
+  opacity: 0.9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-collection-title {
+  font-family: 'Cinzel', 'Italiana', Georgia, serif;
+  font-size: 13.5px;
+  line-height: 1.25;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFFFF0;
   font-weight: 500;
-  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.card-divider {
+  width: 24px;
+  height: 1px;
+  background: rgba(230, 202, 133, 0.4);
+  margin: 6px auto;
+}
+
+.card-sub-edition {
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #E6CA85;
+  opacity: 0.85;
+}
+
+.card-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 4px;
+}
+
+.card-brand-mark {
+  font-size: 7.5px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(251, 249, 245, 0.6);
+}
+
+.card-explore-arrow {
+  font-size: 11px;
+  color: #E6CA85;
+  transition: transform 0.2s ease;
+}
+
+.card:hover .card-explore-arrow,
+.card.is-active .card-explore-arrow {
+  transform: translateX(2px);
+  color: #FFFFF0;
 }
 
 /* Tablet & Mobile responsive card sizing */
@@ -72,14 +167,33 @@
     height: 165px;
     margin-top: -82.5px;
     margin-left: -82.5px;
-    border-radius: 16px;
-    border-width: 2.5px;
+    border-radius: 14px;
   }
 
-  .card .card-caption {
-    font-size: 9px;
-    padding: 8px 6px;
-    letter-spacing: 0.14em;
+  .card-inner-frame {
+    padding: 10px 8px;
+  }
+
+  .card-inner-frame::before {
+    inset: 4px;
+    border-radius: 9px;
+  }
+
+  .card-collection-title {
+    font-size: 10.5px;
+  }
+
+  .card-sub-edition {
+    font-size: 7px;
+  }
+
+  .card-roman {
+    font-size: 9.5px;
+  }
+
+  .card-emblem svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -90,14 +204,10 @@
     height: 145px;
     margin-top: -72.5px;
     margin-left: -72.5px;
-    border-radius: 14px;
-    border-width: 2px;
+    border-radius: 12px;
   }
 
-  .card .card-caption {
-    font-size: 8.5px;
-    padding: 6px 4px;
-    letter-spacing: 0.12em;
+  .card-collection-title {
+    font-size: 9.5px;
   }
 }
-
