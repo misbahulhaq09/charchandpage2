@@ -61,7 +61,7 @@ export const Header: React.FC<HeaderProps> = ({ activeCategory, onNavigateTo }) 
             id="brand-logo-link"
           >
             <span className="font-brand text-xl sm:text-2xl md:text-3xl lg:text-4xl tracking-[0.24em] sm:tracking-[0.32em] text-[#3E101D] font-medium whitespace-nowrap transition-opacity group-hover:opacity-85">
-              CHAR CHAND
+              CHAR CHAAND
             </span>
             <span className="font-nav text-[7.5px] sm:text-[9px] tracking-[0.4em] text-[#3E101D]/75 font-normal uppercase mt-0.5 whitespace-nowrap">
               HAUTE COUTURE

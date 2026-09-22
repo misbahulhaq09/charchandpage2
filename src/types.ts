@@ -5,4 +5,7 @@ export interface CategoryItem {
   shopUrl: string;
   imageUrl?: string;
   indexNumber: string;
+  subtitle?: string;
+  description?: string;
 }
+

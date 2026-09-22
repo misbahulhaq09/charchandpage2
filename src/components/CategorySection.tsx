@@ -30,7 +30,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
           <img
             ref={imageRef}
             src={category.imageUrl}
-            alt={`Char Chand Haute Couture ${category.name}`}
+            alt={`Char Chaand Haute Couture ${category.name}`}
             className="category-image w-full h-full object-cover object-center transform scale-100 transition-transform duration-1000 ease-out will-change-transform"
             loading={index === 0 ? 'eager' : 'lazy'}
             decoding="async"
@@ -50,7 +50,7 @@ export const CategorySection: React.FC<CategorySectionProps> = ({
         rel="noopener noreferrer"
         id={`category-cover-${category.id}`}
         className="group relative z-10 flex flex-col items-center justify-center text-center px-6 py-12 max-w-4xl cursor-pointer focus:outline-none"
-        aria-label={`Explore ${category.name} collection on Char Chand Shopify store`}
+        aria-label={`Explore ${category.name} collection on Char Chaand Shopify store`}
       >
         {/* Category Name */}
         <h2

@@ -9,7 +9,7 @@ export const FinalShopSection: React.FC = () => {
       <div className="w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center my-auto">
         {/* Brand identity */}
         <span className="font-brand text-2xl sm:text-3xl lg:text-4xl tracking-[0.25em] sm:tracking-[0.3em] font-normal mb-2 text-[#3E101D]">
-          CHAR CHAND
+          CHAR CHAAND
         </span>
         <span className="font-nav text-[9px] sm:text-[10px] md:text-[11px] tracking-[0.35em] sm:tracking-[0.4em] uppercase text-[#3E101D]/70 mb-8 sm:mb-12">
           HAUTE COUTURE
@@ -47,7 +47,7 @@ export const FinalShopSection: React.FC = () => {
 
       {/* Minimal Footer Line */}
       <footer className="w-full max-w-6xl mx-auto pt-10 sm:pt-16 flex flex-col sm:flex-row items-center justify-between text-[#3E101D]/45 border-t border-[#3E101D]/10 text-[9px] sm:text-[10px] font-nav tracking-[0.2em] sm:tracking-[0.25em] uppercase space-y-3 sm:space-y-0 text-center">
-        <span>© CHAR CHAND</span>
+        <span>© CHAR CHAAND</span>
         <span>HAUTE COUTURE · NEW DELHI</span>
         <a
           href="https://shop.charchand.in"
