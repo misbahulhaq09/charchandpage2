@@ -4,65 +4,56 @@ import { BounceCards, LookbookCardItem } from './BounceCards';
 const LOOKBOOK_ITEMS: LookbookCardItem[] = [
   {
     id: 'indo-western',
-    label: 'Indo Western Couture',
-    link: 'https://shop.charchand.in/collections/indo-western',
+    label: 'INDO WESTERN COUTURE',
+    link: 'https://charchaand-e.myshopify.com/collections/indo-western',
     romanNumeral: 'I',
     discipline: 'Atelier Discipline 01',
     edition: 'Haute Collection',
   },
   {
-    id: 'traditional-suits',
-    label: 'Traditional Royal Suits',
-    link: 'https://shop.charchand.in/collections/traditional-suits',
+    id: 'mens-formal',
+    label: "MEN'S FORMAL",
+    link: 'https://charchaand-e.myshopify.com/collections/mens-formal',
     romanNumeral: 'II',
     discipline: 'Atelier Discipline 02',
-    edition: 'Heritage Suits',
-  },
-  {
-    id: 'mens-formal',
-    label: "Men's Formal Bespoke",
-    link: 'https://shop.charchand.in/collections/mens-formal',
-    romanNumeral: 'III',
-    discipline: 'Atelier Discipline 03',
-    edition: 'Sartorial Tailoring',
+    edition: 'Sartorial Bespoke',
   },
   {
     id: 'womens-formal',
-    label: "Women's Formal Eveningwear",
-    link: 'https://shop.charchand.in/collections/womens-formal',
-    romanNumeral: 'IV',
-    discipline: 'Atelier Discipline 04',
+    label: "WOMEN'S FORMAL",
+    link: 'https://charchaand-e.myshopify.com/collections/womens-formal',
+    romanNumeral: 'III',
+    discipline: 'Atelier Discipline 03',
     edition: 'Gala & Eveningwear',
   },
   {
     id: 'perfumes',
-    label: 'Haute Parfumerie',
-    link: 'https://shop.charchand.in/collections/perfumes',
-    romanNumeral: 'V',
-    discipline: 'Atelier Discipline 05',
+    label: 'HAUTE PERFUMES',
+    link: 'https://charchaand-e.myshopify.com/collections/perfumes',
+    romanNumeral: 'IV',
+    discipline: 'Atelier Discipline 04',
     edition: 'Artisanal Scents',
   },
   {
     id: 'jewellery',
-    label: 'Fine High Jewellery',
-    link: 'https://shop.charchand.in/collections/jewellery',
-    romanNumeral: 'VI',
-    discipline: 'Atelier Discipline 06',
+    label: 'FINE JEWELLERY',
+    link: 'https://charchaand-e.myshopify.com/collections/jewellery',
+    romanNumeral: 'V',
+    discipline: 'Atelier Discipline 05',
     edition: 'Precious Stones',
   },
   {
     id: 'bags',
-    label: 'Artisan Leather Bags',
-    link: 'https://shop.charchand.in/collections/bags',
-    romanNumeral: 'VII',
-    discipline: 'Atelier Discipline 07',
+    label: 'ARTISANAL LEATHER BAGS',
+    link: 'https://charchaand-e.myshopify.com/collections/bags',
+    romanNumeral: 'VI',
+    discipline: 'Atelier Discipline 06',
     edition: 'Handcrafted Leather',
   },
 ];
 
 const CATEGORY_IDS = [
   'indo-western',
-  'traditional-suits',
   'mens-formal',
   'womens-formal',
   'perfumes',
@@ -131,10 +122,10 @@ export const AtelierLookbook: React.FC<{
 
         {/* Sub-caption with direct link */}
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-between w-full text-[10px] sm:text-[11px] font-nav tracking-[0.2em] sm:tracking-[0.25em] text-[#3E101D]/70 uppercase pt-5 sm:pt-6 border-t border-[#3E101D]/15 space-y-2 sm:space-y-0 text-center sm:text-left">
-          <span>7 HAUTE DISCIPLINES</span>
+          <span>6 HAUTE DISCIPLINES</span>
           <span className="hidden sm:inline">POWERED BY GSAP & REACT BITS</span>
           <a
-            href="https://shop.charchand.in"
+            href="https://charchaand-e.myshopify.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#3E101D] hover:underline font-semibold"

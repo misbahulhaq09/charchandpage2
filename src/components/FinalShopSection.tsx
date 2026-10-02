@@ -21,7 +21,7 @@ export const FinalShopSection: React.FC = () => {
         {/* FINAL SHOP CTA: "SHOP THE COLLECTION" */}
         <a
           id="final-shop-collection-cta"
-          href="https://shop.charchand.in"
+          href="https://charchaand-e.myshopify.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="group relative inline-flex items-center justify-center px-6 sm:px-10 md:px-14 py-4 sm:py-5 border border-[#260710] bg-[#260710] hover:bg-[#3D0F1E] text-[#FBF9F5] transition-all duration-500 overflow-hidden shadow-lg w-full max-w-xs sm:max-w-none sm:w-auto"
@@ -36,12 +36,12 @@ export const FinalShopSection: React.FC = () => {
 
         {/* Sub-label showing direct domain */}
         <a
-          href="https://shop.charchand.in"
+          href="https://charchaand-e.myshopify.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-5 sm:mt-6 font-nav text-[9.5px] sm:text-[10px] tracking-[0.25em] sm:tracking-[0.3em] uppercase text-[#3E101D]/50 hover:text-[#3E101D] transition-colors"
         >
-          SHOP.CHARCHAND.IN
+          CHARCHAAND-E.MYSHOPIFY.COM
         </a>
       </div>
 
@@ -50,7 +50,7 @@ export const FinalShopSection: React.FC = () => {
         <span>© CHAR CHAAND</span>
         <span>HAUTE COUTURE · NEW DELHI</span>
         <a
-          href="https://shop.charchand.in"
+          href="https://charchaand-e.myshopify.com/"
           target="_blank"
           rel="noopener noreferrer"
           className="hover:text-[#3E101D] transition-colors"

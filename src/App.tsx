@@ -7,13 +7,49 @@ import { FinalShopSection } from './components/FinalShopSection';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CATEGORY_SLUG_MAP: Record<string, string> = {
+  'indo-western': 'indo-western',
+  'mens-formal': 'mens-formal',
+  'womens-formal': 'womens-formal',
+  'perfumes': 'perfumes',
+  'jewellery': 'jewellery',
+  'bags': 'bags',
+};
+
+const SLUG_TO_ID_MAP: Record<string, string> = {
+  'indo-western': 'indo-western',
+  'mens-formal': 'mens-formal',
+  'womens-formal': 'womens-formal',
+  'perfumes': 'perfumes',
+  'jewellery': 'jewellery',
+  'bags': 'bags',
+};
+
 export default function App() {
   const [activeCategory, setActiveCategory] = useState<string>('indo-western');
   const mainContainerRef = useRef<HTMLDivElement>(null);
 
-  // Smooth scroll to lookbook or shop section
+  // Initialize category based on current pathname (e.g. /collections/perfumes) or hash
+  useEffect(() => {
+    const path = window.location.pathname.toLowerCase();
+    const hash = window.location.hash.toLowerCase().replace('#', '');
+
+    for (const [slug, id] of Object.entries(SLUG_TO_ID_MAP)) {
+      if (path.includes(`/collections/${slug}`) || hash === slug || hash === id) {
+        setActiveCategory(id);
+        break;
+      }
+    }
+  }, []);
+
+  // Smooth scroll to lookbook or shop section and update state
   const handleNavigateTo = (id: string) => {
     setActiveCategory(id);
+    const slug = CATEGORY_SLUG_MAP[id];
+    if (slug && (window.location.pathname.startsWith('/collections/') || window.location.pathname === '/')) {
+      window.history.replaceState(null, '', `/collections/${slug}`);
+    }
+
     if (id === 'shop-section') {
       const target = document.getElementById('shop-section');
       if (target) {
@@ -36,6 +72,14 @@ export default function App() {
           behavior: 'smooth',
         });
       }
+    }
+  };
+
+  const handleCategoryChange = (id: string) => {
+    setActiveCategory(id);
+    const slug = CATEGORY_SLUG_MAP[id];
+    if (slug && window.location.pathname.startsWith('/collections/')) {
+      window.history.replaceState(null, '', `/collections/${slug}`);
     }
   };
 
@@ -92,10 +136,10 @@ export default function App() {
         {/* Interactive Atelier Accordion Lookbook */}
         <AtelierLookbook
           activeCategory={activeCategory}
-          onCategoryChange={setActiveCategory}
+          onCategoryChange={handleCategoryChange}
         />
 
-        {/* Final Shop Section: Shop the Collection -> shop.charchand.in */}
+        {/* Final Shop Section: Shop the Collection -> charchaand-e.myshopify.com */}
         <FinalShopSection />
       </main>
     </div>

@@ -44,9 +44,6 @@ export const Header: React.FC<HeaderProps> = ({ activeCategory, onNavigateTo }) 
               {mobileMenuOpen ? 'CLOSE' : 'MENU'}
             </span>
           </button>
-          <span className="hidden md:inline-block font-nav text-[9px] lg:text-[10px] tracking-[0.35em] text-[#3E101D]/60 uppercase whitespace-nowrap">
-            PARIS · NEW DELHI
-          </span>
         </div>
 
         {/* Center: Majestic Brand Title */}
@@ -73,7 +70,7 @@ export const Header: React.FC<HeaderProps> = ({ activeCategory, onNavigateTo }) 
         <div className="flex items-center justify-end w-1/4">
           <a
             id="header-shop-now-btn"
-            href="https://shop.charchand.in"
+            href="https://charchaand-e.myshopify.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="font-nav text-[9px] sm:text-[10.5px] lg:text-[11px] tracking-[0.2em] sm:tracking-[0.28em] uppercase px-3 sm:px-5 py-2 border border-[#260710] bg-[#260710] text-[#FBF9F5] hover:bg-[#3D0F1E] hover:border-[#3D0F1E] transition-all duration-300 whitespace-nowrap shadow-sm font-medium"
@@ -95,18 +92,23 @@ export const Header: React.FC<HeaderProps> = ({ activeCategory, onNavigateTo }) 
             {CATEGORIES.map((cat) => {
               const isActive = activeCategory === cat.id;
               return (
-                <button
+                <a
                   key={cat.id}
                   id={`nav-link-${cat.id}`}
-                  onClick={() => onNavigateTo(cat.id)}
-                  className={`shrink-0 font-nav text-[9px] sm:text-[10.5px] lg:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.22em] whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 transition-all duration-200 border rounded-none ${
+                  href={cat.shopUrl}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigateTo(cat.id);
+                  }}
+                  className={`shrink-0 font-nav text-[9px] sm:text-[10.5px] lg:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.22em] whitespace-nowrap px-2.5 sm:px-3.5 py-1.5 transition-all duration-200 border rounded-none cursor-pointer ${
                     isActive
                       ? 'border-[#3E101D] bg-[#3E101D] text-[#FBF9F5] font-semibold shadow-sm'
                       : 'border-[#3E101D]/20 bg-transparent text-[#3E101D] hover:border-[#3E101D] hover:bg-[#3E101D]/5'
                   }`}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {cat.name}
-                </button>
+                </a>
               );
             })}
           </nav>
@@ -124,25 +126,39 @@ export const Header: React.FC<HeaderProps> = ({ activeCategory, onNavigateTo }) 
               SELECT COLLECTION
             </span>
             {CATEGORIES.map((cat) => (
-              <button
+              <div
                 key={cat.id}
-                id={`mobile-nav-${cat.id}`}
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onNavigateTo(cat.id);
-                }}
-                className={`text-left font-nav text-[12px] uppercase tracking-[0.22em] py-2.5 flex items-center justify-between border-b border-[#3E101D]/10 active:bg-[#3E101D]/5 px-1 ${
-                  activeCategory === cat.id
-                    ? 'text-[#3E101D] font-bold'
-                    : 'text-[#3E101D]/75'
+                className={`flex items-center justify-between border-b border-[#3E101D]/10 py-2 px-1 ${
+                  activeCategory === cat.id ? 'bg-[#3E101D]/5' : ''
                 }`}
               >
-                <span>{cat.name}</span>
-                <span className="text-xs font-light text-[#E6CA85]">→</span>
-              </button>
+                <button
+                  id={`mobile-nav-${cat.id}`}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onNavigateTo(cat.id);
+                  }}
+                  className={`text-left font-nav text-[12px] uppercase tracking-[0.22em] flex-1 py-1 ${
+                    activeCategory === cat.id
+                      ? 'text-[#3E101D] font-bold'
+                      : 'text-[#3E101D]/80'
+                  }`}
+                >
+                  {cat.name}
+                </button>
+                <a
+                  href={cat.shopUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-3 px-2 py-1 border border-[#3E101D]/25 font-nav text-[9px] tracking-[0.2em] uppercase text-[#3E101D] hover:bg-[#3E101D] hover:text-[#FBF9F5] transition-colors"
+                  aria-label={`Visit ${cat.name} Collection`}
+                >
+                  SHOP ↗
+                </a>
+              </div>
             ))}
             <a
-              href="https://shop.charchand.in"
+              href="https://charchaand-e.myshopify.com/"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 text-center font-nav text-[11px] tracking-[0.3em] uppercase py-3.5 border border-[#260710] bg-[#260710] text-[#FBF9F5] hover:bg-[#3D0F1E] font-medium shadow-md"
